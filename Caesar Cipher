@@ -1,0 +1,145 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+/*
+Create 3 function signatures, the actual functions will be created under the
+main program.
+  - First function is for your caesar cipher code that takes in an
+  integer (shift number) and string variable (message). It will return
+  a string variable.
+  *The next functions will be used as helper functions. Helper functions
+  are used inside other functions to help them with additional code.*
+  - Second function will be code to change letters by shifting them left
+  it will take in a charcter variable and integer (shift number).
+  - Third function will be code to change letters by shifting them right
+  it will take in a charcter variable and integer (shift number).
+
+*/
+char sleft(int shiftnumber, char message);
+
+char sright(int shiftnumber, char message);
+
+string shift(int shiftnumber, string message);
+
+int main() {
+
+	string message;
+	int shiftnum;
+
+
+	cout << "Please enter a message: " << flush;
+
+
+  getline(cin,message);
+
+
+	cout << "\nPlease enter in a positive(right) or negative(left) number"
+		 << endl;
+
+	cin >> shiftnum;
+
+	message = shift(shiftnum, message);
+  string temp;
+
+  if(shiftnum < 0){
+    temp = "left";
+    shiftnum = shiftnum*-1;
+  }
+  else if(shiftnum > 0){
+    temp = "right";
+  }
+  cout << "\nEach letter has been moved " << shiftnum << " to the " << temp << "\n" << endl;
+
+	cout << "Your hidden message is: " << message << endl;
+
+
+	cout << "Save your message and your shift number.\n";
+	cout << "\n";
+	cout << "Hide your messages, or else your cover will be blown!\n";
+}
+
+/*
+Create all your functions below, remeber they need to have the SAME
+signatures are the ones written on top of your main program.
+*/
+
+
+// Cipher Function
+
+string shift(int shiftnumber, string message) {
+  
+	for (int i = 0; i < message.length(); i++) {
+
+    message[i] = tolower(message[i]);
+
+
+		if (shiftnumber < 0) {
+			message[i] = sleft(shiftnumber, message[i]);
+      
+		}
+    else if (shiftnumber > 0){
+      message[i] = sright(shiftnumber, message[i]);
+    }
+	}
+
+
+
+	return message;
+
+}
+
+// END OF FUNCTION}
+
+
+
+
+
+  // Left Shift Function
+char sleft(int shiftnumber, char message){
+  for(int i = shiftnumber; i<0; i++){
+    if(message == 'a'){
+      message = 'z';
+    }
+    else if(isblank(message)){
+      return ':';
+    }
+  
+    else if(message == ':'){
+    return ' ';
+  }
+  else if(ispunct(message)){
+    return message;
+  }
+  else{
+    message--;
+  }
+  }
+  return message;
+}
+
+// END OF FUNCTION}
+
+// Right Shift Function
+char sright(int shiftnumber, char message){
+  for(int i=shiftnumber; i>0; i--){
+    if(message == 'z'){
+      message = 'a';
+    }
+    else if(isblank(message)){
+      return ':';
+    }
+    else if(message== ':'){
+      return ' ';
+    }
+    else if(ispunct(message)){
+      return message;
+    }
+    else{
+      message++;
+    }
+  }
+  return message;
+}
+
+// END OF FUNCTION}
